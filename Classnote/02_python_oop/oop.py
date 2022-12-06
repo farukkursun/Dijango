@@ -18,7 +18,7 @@ print_type(['Qadir', 22, 22.3, [1,2,3], True, (1,2,3), lambda x:x])
 '''
 # ---------------------------------------------
 '''
-# Python'da class oluşturma:
+#  Python'da class oluşturma:
 class ClassName: # PEP8 -> PascalCase yapıda isimlendirilir: ExampleMyClassName
     # Attributes/Properties
     variable_for_class = 'value'
@@ -72,8 +72,8 @@ print(personal_2.location)
 # print(personal_1.location) # Bir instance ile oluşturulan attr başka bir instance'i etkilemez.
 print(personal_2.name)
 print(personal_1.name)
-
 '''
+
 # ---------------------------------------------
 '''
 # SELF keyword:
@@ -137,7 +137,7 @@ class Person:
 
 person5 = Person()
 person5.test()
-person5.static_method()d
+person5.static_method()
 '''
 # ---------------------------------------------
 '''
@@ -170,6 +170,7 @@ print(person6)
 # Inheritance: Bir sınıfı başka bir sınınfın özellikleri ile birlikte çağırma (miras alma)
 # Polymorphism: Miras aldığımız sınıfın özellik/methodlarını değiştirebilme, yeniden yazma.
 # ---------------------------------------------
+
 class Person:
     name = 'Qadir'
     surname = 'Adamson'
@@ -209,6 +210,7 @@ print(employee.salary)
 employee.set_name('Victor', 'Hugo', 10000, 'AWS')
 print(employee.salary)
 print(employee.get_name())
+
 
 # ---------------------------------------------
 '''
