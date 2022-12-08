@@ -19,6 +19,6 @@ from fscohort.views import home, students
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
-    path('fs/',include('fscohort.urls') )
+    
+    path('',include('fscohort.urls') )
 ]
