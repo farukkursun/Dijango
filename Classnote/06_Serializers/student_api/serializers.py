@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Student
+from .models import Student, Path
 
 # class StudentSerializer(serializers.Serializer):
 #     first_name = serializers.CharField(max_length=30)
@@ -19,7 +19,27 @@ from .models import Student
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    full_name= serializers.SerializerMethodField()
+    path= serializers.StringRelatedField()
+    path_id= serializers.IntegerField()
     class Meta:
         model = Student
-        fields= '__all__'
-        # fields=['id', 'first_name']
+        # fields= '__all__'
+        fields = ["id", 'path', "first_name", "last_name", "number", "full_name", 'path_id']
+
+    def get_full_name(self, obj):
+        return f'{obj.first_name} - {obj.last_name}'
+
+
+class PathSerializer(serializers.ModelSerializer):
+    # students = StudentSerializer(many=True)
+    
+    students = serializers.HyperlinkedRelatedField(
+        many= True,
+        read_only = True,
+        view_name = "detail"
+    )
+    
+    class Meta:
+        model = Path
+        fields = ["id", "path_name", "students" ]
