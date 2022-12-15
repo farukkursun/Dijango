@@ -1,7 +1,14 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, mixins, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
+
+from django.shortcuts import get_object_or_404
+
+from .models import Student
+from .serializers import StudentSerializer
 
 # Temel API görüntüleme
 
@@ -24,10 +31,10 @@ DELETE->Post dan türemistir.  Kayit silme
 #------------------------------------------------------
 # Student Serializeers  görüntüleme
 
-from .models import Student
-from .serializers import StudentSerializer
 
 
+
+'''
 @api_view(['GET']) # Default olarak [GET]
 def student_list(request):
     students= Student.objects.all()
@@ -46,13 +53,13 @@ def student_create(request):
         serializer.save()
         return Response({
             'message':'Created Successfully'
-        }, status.HTTP_201_CREATED)
+        },status= status.HTTP_201_CREATED)
     else:
-        return Response({"message": "Data not Validated", "data": serializer.data}, status.HTTP_400_BAD_REQUEST)
+        # return Response({"message": "Data not Validated", "data": serializer.data}, status.HTTP_400_BAD_REQUEST)
         # return Response({
         #     'message': 'Data not Validet'
         # })    
-
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 #------------------------------------------------------
 # tek kayit görüntüleme
 
@@ -162,3 +169,115 @@ def student_detail_update_delete(request, pk):
             "status": True,
             "message": "Deleted Successfully"
             }, status.HTTP_204_NO_CONTENT)
+
+'''
+
+
+
+
+############################################################
+
+
+
+class StudentListCreate(APIView):
+    def get(self, ruquest):
+        students= Student.objects.all()
+        serializer = StudentSerializer(students, many= True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer =StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class StudentDetail(APIView):
+
+    def get_obj(self,pk):
+        return get_object_or_404(Student, pk=pk)
+
+
+    def get(self, request,pk):
+        student=self.get_obj(pk)
+        serializer = StudentSerializer(student)
+        return Response(serializer.data)
+
+    def put(self, request,pk):
+        student=self.get_obj(pk)
+        serializer=StudentSerializer(data=request.data, instance=student)  
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request,pk):
+        student=self.get_obj(pk)
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
+
+
+
+############################################
+
+
+class StudentGAV(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericAPIView
+):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class StudentDetailGAV(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    GenericAPIView
+):
+
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+
+
+#########################################################
+
+
+class StudentCV(ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+
+class StudentDetailCV(RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer 
+
+
+
+####################################################################
+
+
+class StudentMVS(ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer 
+

@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+'''
 from .views import (
     home,
     student_list,
@@ -7,10 +8,29 @@ from .views import (
     student_update,
     student_delete,
     student_list_create,
-    student_detail_update_delete,
+    student_detail_update_delete,)
 
+'''
+
+
+from .views import (
+    home,
+    StudentListCreate,
+    StudentDetail,
+    StudentGAV,
+    StudentDetailGAV,
+    StudentCV,
+    StudentDetailCV,
+    StudentMVS
 )
 
+from rest_framework import routers
+
+
+router= routers.DefaultRouter()
+router.register('student', StudentMVS)
+
+'''
 urlpatterns = [
     path('', home),
     path('student_list/',student_list),
@@ -21,4 +41,17 @@ urlpatterns = [
     path('student_list_create/',student_list_create),
     path('student_detail_update_delete/<int:pk>',student_detail_update_delete),
 
+]
+'''
+
+
+urlpatterns = [
+    path('', home),
+    # path('student/', StudentListCreate.as_view()),
+    # path('student/', StudentGAV.as_view()),
+    # path('student/', StudentCV.as_view()),
+    # path('student/<int:pk>/', StudentDetail.as_view())
+    # path('student/<int:pk>/', StudentDetailGAV.as_view())
+    # path('student/<int:pk>/', StudentDetailCV.as_view())
+    path('', include(router.urls))
 ]
