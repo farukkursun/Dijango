@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 from .models import Todo
 from .serializers import TodoSerializers
@@ -58,5 +59,13 @@ class Todos(ListCreateAPIView):
 
 
 class TodoDetail(RetrieveUpdateDestroyAPIView):
+   queryset = Todo.objects.all()
+   serializer_class= TodoSerializers  
+
+
+
+################# modelvievset #############
+
+class TodoMVS(ModelViewSet):
    queryset = Todo.objects.all()
    serializer_class= TodoSerializers  

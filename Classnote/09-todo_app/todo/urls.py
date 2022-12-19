@@ -5,9 +5,14 @@ from .views import (
     todo_list_create,
     todo_get_del_upd,
     Todos,
-    TodoDetail
+    TodoDetail,
+    TodoMVS
     )
 
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('todo', TodoMVS)
 
 urlpatterns = [
    
@@ -16,4 +21,5 @@ urlpatterns = [
     path('todos/<int:id>', todo_get_del_upd),
     path('todos_cls/', Todos.as_view()),
     path('todos_cls/<int:pk>', TodoDetail.as_view()),
+    path('', include(router.urls)),
 ]
