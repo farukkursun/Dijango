@@ -285,7 +285,7 @@ class StudentMVS(ModelViewSet):
     # pagination_class=CustomLimitOffsetPagination
     # pagination_class= CustumCurserPagination
     filter_backends=[DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields= [ 'id', 'number']
+    filterset_fields= [ 'id', 'number','first_name']
     search_fields = ['first_name', 'last_name'] # içinde (LIKE '%%') arama yapar.
     ordering_fields= ['id', 'first_name', 'last_name', 'number']
 
