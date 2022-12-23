@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http.response import HttpResponse
 
 from .models import Category, Post, Comment
-from .serilaziers import CategorySerializers, PostSerializers, CommentSerializers
+from .serializers import CategorySerializers, PostSerializers, CommentSerializers
 
 from rest_framework.viewsets import ModelViewSet
 
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permissions import IsAdminOrReadOnly, IsOwnerOrAdminOrReadOnly
 
 def home(request):
     return HttpResponse(
@@ -14,18 +14,20 @@ def home(request):
     )
 
 
+class CategoryMVS(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializers
+    permission_classes= [IsAdminOrReadOnly]
+
+
 class PostMVS(ModelViewSet):
     queryset =Post.objects.all()
     serializer_class=PostSerializers
-    permission_classes= [IsAuthenticatedOrReadOnly]
+    permission_classes= [IsOwnerOrAdminOrReadOnly]
 
 
 class CommentMVS(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializers
-    permission_classes= [IsAuthenticated]
+    permission_classes= [IsOwnerOrAdminOrReadOnly]
 
-class CategoryMVS(ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializers
-    permission_classes= [IsAdminUser]
