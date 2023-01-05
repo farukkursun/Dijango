@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@ao^qn#iq8#&1_2@o5_#-%tdp36q202q0^7d@1=82vnf0#ma(6'
+SECRET_KEY = 'django-insecure--&e=lh3e8=r2b#1ssqupf-er1ea!=h(p(f!hh6p8m@l2@3%l!0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,20 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-     'grappelli', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    ##
+    # Apps:
     'product',
-    ##
+    # Externals:
     'ckeditor',
-     'django_admin_listfilter_dropdown',
-     'rangefilter',
-     'import_export',
 ]
 
 MIDDLEWARE = [
@@ -62,9 +58,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [],
-          # İlk önce buraya bakar yoksa defaulta gider:
-        'DIRS': [BASE_DIR, "templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,38 +119,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-import os
-
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CKEDITOR_CONFIGS = {
-    'full' : {
-        'toolbar': 'full',
-        'height': '500px',
-        'width': '100%'
-    },
     'default' : {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source']
-        ],
-        'height': '200px',
-        'width': '100%'
+        'toolbar' : 'full',
+        'height' : 700,
+        'width' : 1000
     }
 }
