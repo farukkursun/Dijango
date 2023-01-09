@@ -1,0 +1,22 @@
+# NodeJS
+FROM node:19-slim
+
+# Set main folder in docker:
+WORKDIR /frontend
+# Copy file local to docker:
+COPY package.json /frontend/package.json
+
+# Run shell-command in docker before build:
+RUN npm install
+
+# copy all local-files (.) to docker (/frontend):
+COPY . /frontend
+
+# Run shell-script:
+CMD ["npm", "start"]
+# App Port (optional)
+EXPOSE 3000
+
+# $ cd /frontend
+# $ docker build -t frontend .
+# $ docker run -d -p 3000:3000 --name frontend frontend
