@@ -1,29 +1,38 @@
+# --- Build Start ----
 
-# Python:
-# last version:
+# Python
+# Last Version
 # FROM python
-# light version
-FROM python:3.10.8-slim-bullseye
+# Light Versiyon
+FROM python:3.11.1-slim-bullseye
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Set main folder in docker:
+# Set main folder in container:
+# WORKDIR /
 WORKDIR /backend
 
-# Copy file from local to docker:
-COPY requirements.txt /backend/requirements.txt
+# copy all from local-files (.) to docker (/backend):
+COPY . /backend
 
 # Run shell-command in docker before build:
 RUN pip install -r requirements.txt --no-cache-dir
 
-# copy all from local-files (.) to docker (/backend):
-COPY . /backend
+# --- Build End ----
+
+# --- Run Start ---
 
 # Run shell-script:
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 # App Port (optional)
 EXPOSE 8000
 
+# --- Run Start ---
+
 # $ cd /backend
+# Create Image:
 # $ docker build -t backend .
+# Create and Start Container:
+# -d -> Daemon
 # $ docker run -d -p 8000:8000 --name backend backend
+# Browser: http://localhost:8000
