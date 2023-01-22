@@ -37,4 +37,11 @@ class AccountSerializers(serializers.ModelSerializer):
 
 
 
-          
+from dj_rest_auth.serializers import TokenSerializer
+
+class TokenUserSerializer(TokenSerializer):
+
+    user = AccountSerializers(read_only=True)
+
+    class Meta(TokenSerializer.Meta):
+        fields = ('key', 'user')        
