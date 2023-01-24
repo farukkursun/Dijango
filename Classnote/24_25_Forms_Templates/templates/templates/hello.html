@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Hello Page {% endblock title %}
+
+{% block baslik %}
+<h1>HELLO</h1>
+{% endblock baslik %}
+
+{% block other %}
+
+    {# Single Line Comment #}
+
+    <p>{{ title }}</p>
+    <p>{{ dict1 }}</p>
+    <p>{{ dict1.django }}</p>
+    <p>{{ my_list }}</p>
+    <p>{{ my_list.0 }}</p>
+
+    {% comment %}
+        Multi Line Comment
+    {% endcomment %}
+<p>
+    {% if is_exist %}
+        is_exist == True
+    {% else %}
+        is_exist == False
+    {% endif %}
+</p>
+
+<ul>
+    {% for var in my_list %}
+        <li> {{ var }} </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    <b>Filters: https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#ref-templates-builtins-filters</b>
+    <li> lower -> {{ title|lower }} </li> {# Tümü küçük harf #}
+    <li> upper -> {{ title|upper }} </li> {# Tümü büyük harf #}
+    <li> title -> {{ title|title }} </li> {# Başlık stili #}
+    <li> truncatewords -> {{ title|truncatewords:2 }} </li> {# Kelime adet limitleyici #}
+    <li> list:join -> {{ my_list|join:'--' }} </li> {# eleman birleştirici #}
+    <li> length -> {{ title|length }} </li> {# str: karakter sayısı #}
+    <li> length -> {{ my_list|length }} </li> {# list: eleman sayısı #}
+
+</ul>
+    
+
+{% endblock other %}

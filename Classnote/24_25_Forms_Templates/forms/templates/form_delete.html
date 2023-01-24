@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+<h2> Delete </h2>
+
+<h3>{{ student }}</h3>
+
+<form action="" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Silinsin mi?')" >
+    {% csrf_token %}
+    <input type="submit" value="DELETE" />
+</form>
+
+
+{% endblock container %}
