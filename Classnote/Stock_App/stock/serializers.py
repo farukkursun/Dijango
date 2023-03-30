@@ -26,6 +26,8 @@ class BrandSerializer(serializers.ModelSerializer):
         )
 
 
+
+
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
     category_id = serializers.IntegerField(write_only=True)
